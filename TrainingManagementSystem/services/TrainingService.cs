@@ -1,5 +1,6 @@
 ﻿
 using System;
+using TrainingManagementSystem.exs;
 using TrainingManagementSystem.Models;
 
 namespace TrainingManagementSystem.Services
@@ -43,8 +44,9 @@ namespace TrainingManagementSystem.Services
 
             if (found == false)
             {
-                Console.WriteLine("Course not found.");
+                throw new SearchByCodeException("INVALID");
             }
+            
         }
 
         public void SearchByTitle(string title)
@@ -142,5 +144,25 @@ namespace TrainingManagementSystem.Services
                 course.TotalSeats + "\t" +
                 course.EnrolledCount);
         }
+
+        public CourseSummary[] GetCourseSummaries()
+        {
+            CourseSummary[] summaries = new CourseSummary[courses.Length];
+
+            for (int i = 0; i < courses.Length; i++)
+            {
+                int availableSeats =
+                    courses[i].TotalSeats - courses[i].EnrolledCount;
+
+                summaries[i] = new CourseSummary(
+                    courses[i].CourseCode,
+                    courses[i].Title,
+                    courses[i].Fee,
+                    availableSeats);
+            }
+
+            return summaries;
+        }
+
     }
 }

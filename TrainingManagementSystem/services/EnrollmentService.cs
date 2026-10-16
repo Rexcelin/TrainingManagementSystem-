@@ -24,7 +24,7 @@ namespace TrainingManagementSystem.Services
         public void CreateEnrollment()
         {
             Console.Write("Enter learner ID: ");
-            string learnerId = Console.ReadLine() ?? "";
+            string learnerId = Console.ReadLine()?? "";
 
             Learner? learner = learnerService.FindLearner(learnerId);
 
@@ -182,6 +182,34 @@ namespace TrainingManagementSystem.Services
             }
 
             return false;
+        }
+
+        public Enrollment? FindEnrollment(int enrollmentId)
+        {
+            foreach (Enrollment enrollment in enrollments)
+            {
+                if (enrollment.EnrollmentId == enrollmentId)
+                {
+                    return enrollment;
+                }
+            }
+
+            return null;
+        }
+
+        public decimal GetExpectedFees()
+        {
+            decimal totalFees = 0;
+
+            foreach (Enrollment enrollment in enrollments)
+            {
+                if (enrollment.Status == EnrollmentStatus.Active)
+                {
+                    totalFees = totalFees + enrollment.FinalFee;
+                }
+            }
+
+            return totalFees;
         }
     }
 }
