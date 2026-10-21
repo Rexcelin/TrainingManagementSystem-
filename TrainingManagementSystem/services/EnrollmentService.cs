@@ -211,5 +211,27 @@ namespace TrainingManagementSystem.Services
 
             return totalFees;
         }
+        public List<Enrollment> GetAllEnrollments()
+        {
+            return new List<Enrollment>(enrollments);
+        }
+
+        public void LoadEnrollments(List<Enrollment> savedEnrollments)
+        {
+            enrollments.Clear();
+            int highestId = 0;
+
+            foreach (Enrollment enrollment in savedEnrollments)
+            {
+                enrollments.Add(enrollment);
+
+                if (enrollment.EnrollmentId > highestId)
+                {
+                    highestId = enrollment.EnrollmentId;
+                }
+            }
+
+            nextEnrollmentId = highestId + 1;
+        }
     }
 }

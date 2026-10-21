@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using TrainingManagementSystem.Models;
+using System.Collections.Generic;
 
 namespace TrainingManagementSystem.Services
 {
@@ -131,6 +132,20 @@ namespace TrainingManagementSystem.Services
         public bool RemoveLearner(string learnerId)
         {
             return learners.Remove(learnerId);
+        }
+        public List<Learner> GetAllLearners()
+        {
+            return new List<Learner>(learners.Values);
+        }
+
+        public void LoadLearners(List<Learner> savedLearners)
+        {
+            learners.Clear();
+
+            foreach (Learner learner in savedLearners)
+            {
+                learners[learner.LearnerId] = learner;
+            }
         }
     }
 }

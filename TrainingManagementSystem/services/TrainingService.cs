@@ -2,6 +2,7 @@
 using System;
 using TrainingManagementSystem.exs;
 using TrainingManagementSystem.Models;
+using System.Collections.Generic;
 
 namespace TrainingManagementSystem.Services
 {
@@ -126,6 +127,7 @@ namespace TrainingManagementSystem.Services
             }
 
             return null;
+
         }
 
         private void DisplayCourseHeader()
@@ -162,6 +164,18 @@ namespace TrainingManagementSystem.Services
             }
 
             return summaries;
+        }
+        public List<Course> GetAllCourses()
+        {
+            return new List<Course>(courses);
+        }
+
+        public void LoadCourses(List<Course> savedCourses)
+        {
+            if (savedCourses != null && savedCourses.Count > 0)
+            {
+                courses = savedCourses.ToArray();
+            }
         }
 
     }

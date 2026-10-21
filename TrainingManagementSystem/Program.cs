@@ -2,6 +2,8 @@
 using TrainingManagementSystem.Services;
 using TrainingManagementSystem.Models;
 using TrainingManagementSystem.Sessions;
+using System.IO;
+using TrainingManagementSystem.Utilities;
 
 namespace TrainingManagementSystem
 {
@@ -19,6 +21,18 @@ namespace TrainingManagementSystem
                 new PaymentService(enrollmentService);
             ReportService reportService =
                 new ReportService(trainingService, enrollmentService, paymentService);
+
+            TextWriter originalOutput = Console.Out;
+
+            StreamWriter fileWriter = new StreamWriter(
+                "TrainingManagementSystem_Output.txt", true);
+
+            fileWriter.AutoFlush = true;
+
+            Console.SetOut(new MultiTextWriter(originalOutput, fileWriter));
+
+            Console.WriteLine("Training Management System Started");
+            Console.WriteLine("Date and Time: " + DateTime.Now);
 
             int choice = 0;
 
@@ -206,6 +220,9 @@ namespace TrainingManagementSystem
                     Console.WriteLine("Invalid choice.");
                 }
             }
+            Console.WriteLine("Training Management System Closed");
+            Console.SetOut(originalOutput);
+            fileWriter.Close();
         }
     }
 }

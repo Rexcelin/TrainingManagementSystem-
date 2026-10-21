@@ -123,5 +123,22 @@ namespace TrainingManagementSystem.Services
         {
             return payments;
         }
+        public void LoadPayments(List<Payment> savedPayments)
+        {
+            payments.Clear();
+            int highestId = 0;
+
+            foreach (Payment payment in savedPayments)
+            {
+                payments.Add(payment);
+
+                if (payment.PaymentId > highestId)
+                {
+                    highestId = payment.PaymentId;
+                }
+            }
+
+            nextPaymentId = highestId + 1;
+        }
     }
 }
